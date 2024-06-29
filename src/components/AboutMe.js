@@ -16,6 +16,7 @@ import TorusDecor from './TorusDecor.js'
 import Navbar from './Navbar.jsx';
 import Popup from './Popup.js'; 
 import MusicPopup from './MusicPopup.js'; 
+import FooterNavbar from './FooterNavbar.jsx';
 
 function AboutMe() {
   const refContainer = useRef(null);
@@ -97,7 +98,35 @@ function AboutMe() {
         pointer.x = ( event.clientX / window.innerWidth ) * 2 - 1;
         pointer.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
     }
-    console.log(scene.children); 
+
+    var lastcubetouched = null; 
+    function raycasterFunction( ) {
+      // update the picking ray with the camera and pointer position
+      raycaster.setFromCamera( pointer, camera );
+      // calculate objects intersecting the picking ray
+      const intersects = raycaster.intersectObjects( scene.children );
+      if (intersects.length > 0){
+        if ((intersects[0].object.name == "intro") || (intersects[0].object.name == "hobbies") || (intersects[0].object.name == "education") || (intersects[0].object.name == "music")){
+          intersects[0].object.material.color.set( 0xD8BFD8);
+
+          if ((lastcubetouched != intersects[0].object) && (lastcubetouched != null)){
+            lastcubetouched.material.color.set( 0xffffff );
+          }
+          lastcubetouched = intersects[0].object; 
+          
+        }
+      //console.log(intersects); 
+      renderer.render( scene, camera );
+      }
+      else {
+        if (lastcubetouched != null){
+          lastcubetouched.material.color.set(0xffffff );  
+        }       
+      }
+      //console.log(intersects); 
+      renderer.render( scene, camera );
+      //requestAnimationFrame(render);
+    } 
     function handleClicks() {
         // update the picking ray with the camera and pointer position
         raycaster.setFromCamera( pointer, camera );
@@ -120,9 +149,9 @@ function AboutMe() {
             else if (intersects[0].object.name == "music"){
               setMusicPopup({ show: true });
             }
-            else if (intersects[0].object.name == "misc") {
-              const title = "Miscellaneous fun facts"; 
-              const list = "I have a dog! \n I've had the same home and lock screen ever since I first got a phone \n I got purple highlights when I turned 21"
+            else if (intersects[0].object.name == "intro") {
+              const title = "Hi! Nice to meet you."; 
+              const list = "I'm Kavitha! Thanks for visiting :). I was born and raised in the Bay Area, California, which gave me an appreciation for good food and blue skies. Here are some of my favorite things about this world: Coffee shops (like most people), the first blue sky after weeks of rain, the way trees look in the fall, chilly winters, Halloween, Christmas, bookstores, people (and animal) watching, getting to know someone else, and enjoying the simple pleasures of life."
               setPopup({ show: true, title: title, description: list });
 
             }
@@ -341,6 +370,7 @@ function AboutMe() {
     window.addEventListener('resize', handleResize);
     window.addEventListener('keydown', moveCamera);
     window.addEventListener( 'pointermove', onPointerMove );
+    window.addEventListener( 'pointermove', raycasterFunction );
     window.addEventListener( 'click', handleClicks );
     //window.requestAnimationFrame(render);
     return () => {
@@ -369,11 +399,11 @@ function AboutMe() {
         <TorusDecor scene={scene} texturefp={"/torusgradient.jpg"} xval={0} yval={0} zval={-110} clipval={-110} />
         <TorusDecor scene={scene} texturefp={"/torusgradient.jpg"} xval={0} yval={0} zval={-310} clipval={-310}/>
         <Boxstars scene={scene} />
-        <Box scene={scene} xval={-75} yval={0} zval={-110} texturefp={"/education.jpg"} name={"education"}/>
-        <Box scene={scene} xval={0} yval={0} zval={-235} texturefp={"/hobbies.jpg"} name={"hobbies"}/> 
-        <Box scene={scene} xval={75} yval={0} zval={-310} texturefp={"/music.jpg"} name={"music"}/> 
-        <Box scene={scene} xval={0} yval={0} zval={-435} texturefp={"/misc.jpg"} name={"misc"}/> 
-
+        <Box scene={scene} xval={0} yval={0} zval={-235} texturefp={"/education.jpg"} name={"education"}/>
+        <Box scene={scene} xval={75} yval={0} zval={-310} texturefp={"/hobbies.jpg"} name={"hobbies"}/> 
+        <Box scene={scene} xval={0} yval={0} zval={-435} texturefp={"/music.jpg"} name={"music"}/> 
+        <Box scene={scene} xval={-75} yval={0} zval={-110} texturefp={"/intro.jpg"} name={"intro"}/> 
+        <FooterNavbar Navpage={false} />
       </>
       )
       }

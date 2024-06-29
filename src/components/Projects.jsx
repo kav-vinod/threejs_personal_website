@@ -3,6 +3,7 @@ import React, { useState }from 'react';
 import { Tilt } from 'react-tilt'; 
 import { motion } from 'framer-motion'; 
 import Navbar from './Navbar.jsx'; 
+import FooterStatic from './FooterStatic.jsx';
 
 //import { fadeIn, textVariant } from '../utils/motion';
 
@@ -89,6 +90,7 @@ const Projects = () => {
                 <ServiceCard key={service.title} index={index} {...service} />
             ))}
         </div>
+        <FooterStatic />
         </>
     );
 };

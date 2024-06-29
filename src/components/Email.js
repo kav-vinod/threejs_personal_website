@@ -1,5 +1,6 @@
 import React from "react"; 
 import Navbar from './Navbar.jsx';
+import FooterLanding from './FooterLanding.jsx';
 
 const onSubmit = async (event) => {
     console.log(event); 
@@ -78,6 +79,7 @@ const Email = () => {
                 </div>
           </form>
           </div>
+          <FooterLanding />
         </>
       );
 }

@@ -24,13 +24,11 @@ const Navbar = () => {
             <nav className="flex text-lg gap-5 font-bold">
                 <NavLink to="/experience" 
                     onClick={() => handleNavLinkClick} 
-                    state = {{camPosX : 75, camPosY : 0, camPosZ : -129.904 }}
                     className={({ isActive }) => `text-black hover:text-blue-500 ${isActive ? 'text-blue-500' : ''}`}>
                     <p > Experience</p>
                 </NavLink>
                 <NavLink to="/projects" 
                     onClick={() => handleNavLinkClick} 
-                     state = {{camPosX : -150, camPosY : 0, camPosZ : 0 }}
                      className={({ isActive }) => `text-black hover:text-blue-500 ${isActive ? 'text-blue-500' : ''}`}>
                     <p >Projects</p>
                 </NavLink>

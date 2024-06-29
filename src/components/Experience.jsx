@@ -3,6 +3,7 @@ import React, {useState} from 'react';
 import { Tilt } from 'react-tilt'; 
 import { motion } from 'framer-motion'; 
 import Navbar from './Navbar.jsx'; 
+import FooterStatic from './FooterStatic.jsx';
 
 //import { fadeIn, textVariant } from '../utils/motion';
 
@@ -94,6 +95,7 @@ const Experience = () => {
                 <ServiceCard key={service.title} {...service} />
             ))}
         </div>
+        <FooterStatic />
         </>
     );
 };

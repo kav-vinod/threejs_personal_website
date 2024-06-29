@@ -13,6 +13,7 @@ import { Font, FontLoader } from 'three/examples/jsm/loaders/FontLoader';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
 import { PointLight } from 'three';
 import NavbarLanding from './NavbarLanding.jsx';
+import FooterLanding from './FooterLanding.jsx';
 //import { Text3D, Box } from '@react-three/drei';
 
 function Home() {
@@ -230,7 +231,7 @@ function Home() {
     //<TitleText scene={scene} camera={camera} text={"KAVITHA VINOD"} texturefp={"/titletexture.jpg"}/>
   }, []);
   return (
-    <div ref={refContainer}>
+    <div className="flex flex-col min-h-screen" ref={refContainer}>
 
       {scene && camera && 
       (
@@ -244,6 +245,7 @@ function Home() {
         <Box scene={scene} xval={-129.904} yval={0} zval={75} texturefp={"/Experience.jpg"}/>
         <Box scene={scene} xval={0} yval={0} zval={-150} texturefp={"/Projects.jpg"}/> 
         <Box scene={scene} xval={129.904} yval={0} zval={75} texturefp={"/AboutMe.jpg"}/>
+        <FooterLanding/>
       </>
       )
       }

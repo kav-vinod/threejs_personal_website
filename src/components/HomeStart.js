@@ -11,6 +11,7 @@ import Centerpiece from './Centerpiece.js'
 //import { Text3D, Box } from '@react-three/drei';
 import {useLocation} from 'react-router-dom'
 import Navbar from './Navbar.jsx';
+import FooterNavbar from './FooterNavbar.jsx';
 import { useNavigate } from 'react-router-dom';
 
 function HomeStart() {
@@ -22,6 +23,7 @@ function HomeStart() {
   const sceneRef = useRef();
   
   const [scene, setScene] = useState(null);
+
   const location = useLocation(); 
   const camPosX = location.state.camPosX; 
   const camPosY = location.state.camPosY; 
@@ -102,14 +104,55 @@ function HomeStart() {
     //console.log(scene.children); 
 
     //render called when pointer moves per event listener at bottom
+    var lastcubetouched = null;
+    var lastcointouched = null;
     function render() {
         // update the picking ray with the camera and pointer position
         raycaster.setFromCamera( pointer, camera );
         // calculate objects intersecting the picking ray
         const intersects = raycaster.intersectObjects( scene.children );
         if (intersects.length > 0){
-            for ( let i = 0; i < intersects.length; i ++ ) {
+          if ((intersects[0].object.name == "github") || (intersects[0].object.name == "linkedin") || (intersects[0].object.name == "mail")){
+            if (lastcubetouched != null){
+              lastcubetouched.material.color.set(0xffffff ); 
             }
+            intersects[0].object.material[1].color.set( 0xD8BFD8);
+            intersects[0].object.material[2].color.set( 0xD8BFD8 );
+
+            if ((lastcointouched != intersects[0].object) && (lastcointouched != null)){
+              lastcointouched.material[1].color.set( 0xffffff );
+              lastcointouched.material[2].color.set( 0xffffff );
+            }
+            lastcointouched = intersects[0].object; 
+          }
+          else if ((intersects[0].object.name == "projects") || (intersects[0].object.name == "experience") || (intersects[0].object.name == "aboutme") ){
+            if (lastcointouched != null){
+              lastcointouched.material[1].color.set(0xffffff );
+              lastcointouched.material[2].color.set(0xffffff );
+            }
+            intersects[0].object.material.color.set( 0xD8BFD8);
+
+            if ((lastcubetouched != intersects[0].object) && (lastcubetouched != null)){
+              lastcubetouched.material.color.set( 0xffffff );
+            }
+            lastcubetouched = intersects[0].object; 
+            /*
+            setTimeout(() => {
+              intersects[0].object.material.color.set( 0xffffff );
+            }, 1000);
+            */
+          }
+        //console.log(intersects); 
+        renderer.render( scene, camera );
+        }
+        else {
+          if (lastcubetouched != null){
+            lastcubetouched.material.color.set(0xffffff );  
+          }
+          if (lastcointouched != null){
+            lastcointouched.material[1].color.set(0xffffff );  
+            lastcointouched.material[2].color.set(0xffffff ); 
+          }           
         }
         //console.log(intersects); 
         renderer.render( scene, camera );
@@ -129,16 +172,16 @@ function HomeStart() {
           window.open("https://www.linkedin.com/in/kavitha-m-vinod/");
         }
         else if (intersects[0].object.name == "projects"){
-          navigate('/projects', { state: { camPosX: 0, camPosY: 0, camPosZ: 180 } });
+          navigate('/projects');
         }
         else if (intersects[0].object.name == "experience"){
-          navigate('/experience', { state: { camPosX: 0, camPosY: 0, camPosZ: 180 } });
+          navigate('/experience');
         }
         else if (intersects[0].object.name == "aboutme"){
-          navigate('/aboutme', { state: { camPosX: 0, camPosY: 0, camPosZ: 180 } });
+          navigate('/aboutme');
         }
         else if (intersects[0].object.name == "mail"){
-          navigate('/email', { state: { camPosX: 0, camPosY: 0, camPosZ: 180 } });
+          navigate('/email');
         }
         
       //console.log(intersects); 
@@ -236,7 +279,7 @@ function HomeStart() {
         <Box scene={scene} xval={75} yval={0} zval={-129.904} texturefp={"/Experience.jpg"} name="experience"/>
         <Box scene={scene} xval={-150} yval={0} zval={0} texturefp={"/Projects.jpg"} name="projects" /> 
         <Box scene={scene} xval={75} yval={0} zval={129.904} texturefp={"/AboutMe.jpg"} name="aboutme" />
-
+        <FooterNavbar Navpage={true}/>
       </>
       )
       }

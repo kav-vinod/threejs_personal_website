@@ -375,7 +375,10 @@ function AboutMe() {
     //window.requestAnimationFrame(render);
     return () => {
         window.removeEventListener('resize', handleResize);
-        window.removeEventListener('keydown', moveCamera); 
+        window.removeEventListener('keydown', moveCamera);
+        window.removeEventListener( 'pointermove', onPointerMove );
+        window.removeEventListener( 'pointermove', raycasterFunction );
+        window.removeEventListener( 'click', handleClicks ); 
     };
   }, []);
 

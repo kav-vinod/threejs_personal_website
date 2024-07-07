@@ -4,10 +4,11 @@
   "private": true,
   "dependencies": {
     "@react-three/drei": "^9.102.6",
-    "@react-three/fiber": "^8.16.0",
+    "@react-three/fiber": "^8.16.8",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "@types/three": "^0.166.0",
     "framer-motion": "^11.2.6",
     "google-fonts": "^1.0.0",
     "googlefonts": "^1.1.3",

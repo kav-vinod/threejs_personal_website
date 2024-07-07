@@ -32,7 +32,7 @@ function Centerpiece({ scene, texturefp, xval, yval, zval }) {
             centerpiece.rotation.x += 0.01; 
             centerpiece.rotation.y += 0.01; 
 
-            material2.uniforms.u_time.value = (test.clock.getElapsedTime()  % 0.79); 
+            material2.uniforms.u_time.value = (test.clock.getElapsedTime()  % 0.7895); 
 
             requestAnimationFrame(animate); 
         };

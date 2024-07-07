@@ -14,6 +14,7 @@ import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
 import { PointLight } from 'three';
 import NavbarLanding from './NavbarLanding.jsx';
 import FooterLanding from './FooterLanding.jsx';
+import Rings from './Rings.js';
 //import { Text3D, Box } from '@react-three/drei';
 
 function Home() {
@@ -237,14 +238,9 @@ function Home() {
       (
       <>
         <NavbarLanding />
-        <Contact scene={scene} texturefp={"/githublogo.jpg"} link={"https://github.com/kav-vinod"} xval={-129.904} yval={0} zval={-75}/>
-        <Contact scene={scene} texturefp={"/linkedinlogo.jpg"} link={"https://www.linkedin.com/in/kavitha-m-vinod/"} xval={129.904} yval={0} zval={-75}/>
-        <Contact scene={scene} texturefp={"/maillogo.jpg"} link={"https://www.linkedin.com/in/kavitha-m-vinod/"} xval={0} yval={0} zval={150}/>
         <Boxstars scene={scene} />
+        <Rings scene={scene} />
         <Centerpiece scene={scene} texturefp={"/centerpiecetexture.jpg"} xval={0} yval={0} zval={0} />
-        <Box scene={scene} xval={-129.904} yval={0} zval={75} texturefp={"/Experience.jpg"}/>
-        <Box scene={scene} xval={0} yval={0} zval={-150} texturefp={"/Projects.jpg"}/> 
-        <Box scene={scene} xval={129.904} yval={0} zval={75} texturefp={"/AboutMe.jpg"}/>
         <FooterLanding/>
       </>
       )

@@ -21,14 +21,14 @@ function Boxstars({ scene}) {
           */
           const star = new THREE.Mesh(geometry, material);
           //give the star a random position
-          const [x, y, z] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(1050)); 
+          const [x, y, z] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(1000)); 
           star.position.set(x, y, z);
 
           scene.add(star); 
           stars.push(star); 
     }
     useEffect(() => {
-        Array(3500).fill().forEach(addStar)
+        Array(2500).fill().forEach(addStar)
 
         stars.forEach(star => {
             const animate = () => {

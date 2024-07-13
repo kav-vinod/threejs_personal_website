@@ -32,10 +32,10 @@ const Navbar = () => {
                      className={({ isActive }) => `text-black hover:text-blue-500 ${isActive ? 'text-blue-500' : ''}`}>
                     <p >Projects</p>
                 </NavLink>
-                <NavLink to="/aboutme" 
+                <NavLink to="/email" 
                     onClick={() => handleNavLinkClick } 
                     className={({ isActive }) => `text-black hover:text-blue-500 ${isActive ? 'text-blue-500' : ''}`}>
-                     <p >About Me!</p>
+                     <p >Contact Me!</p>
                 </NavLink>
             </nav>  
             

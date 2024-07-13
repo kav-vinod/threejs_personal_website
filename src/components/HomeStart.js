@@ -112,29 +112,35 @@ function HomeStart() {
         // calculate objects intersecting the picking ray
         const intersects = raycaster.intersectObjects( scene.children );
         if (intersects.length > 0){
+          //if a coin is touched (identifier is the id set in the return statement of HomeStart component, set last touched object to its original color UNLESS last touched object matches the currently touched object )
+          //intersects[0] gets you the first object if the objects overlap on a 2D screen 
           if ((intersects[0].object.name == "github") || (intersects[0].object.name == "linkedin") || (intersects[0].object.name == "mail")){
             if (lastcubetouched != null){
               lastcubetouched.material.color.set(0xffffff ); 
             }
-            intersects[0].object.material[1].color.set( 0xD8BFD8);
-            intersects[0].object.material[2].color.set( 0xD8BFD8 );
 
             if ((lastcointouched != intersects[0].object) && (lastcointouched != null)){
+              //for a coin, need to access materials via an array bc two diff materials used for a coin
               lastcointouched.material[1].color.set( 0xffffff );
               lastcointouched.material[2].color.set( 0xffffff );
             }
+            intersects[0].object.material[1].color.set( 0xD8BFD8);
+            intersects[0].object.material[2].color.set( 0xD8BFD8 );
+            //set last touched coin to current intersected object 
             lastcointouched = intersects[0].object; 
           }
+          //else if it's a cube, do the same process 
           else if ((intersects[0].object.name == "projects") || (intersects[0].object.name == "experience") || (intersects[0].object.name == "aboutme") ){
             if (lastcointouched != null){
               lastcointouched.material[1].color.set(0xffffff );
               lastcointouched.material[2].color.set(0xffffff );
             }
-            intersects[0].object.material.color.set( 0xD8BFD8);
 
             if ((lastcubetouched != intersects[0].object) && (lastcubetouched != null)){
               lastcubetouched.material.color.set( 0xffffff );
             }
+
+            intersects[0].object.material.color.set( 0xD8BFD8);
             lastcubetouched = intersects[0].object; 
             /*
             setTimeout(() => {
@@ -145,6 +151,7 @@ function HomeStart() {
         //console.log(intersects); 
         renderer.render( scene, camera );
         }
+        //if no cube or coin is touched, set everythng to white (white shows the original texture)
         else {
           if (lastcubetouched != null){
             lastcubetouched.material.color.set(0xffffff );  
@@ -277,8 +284,8 @@ function HomeStart() {
         <Centerpiece scene={scene} texturefp={"/centerpiecetexture.jpg"} xval={0} yval={0} zval={0}/>
         <TitleText scene={scene} text={"KAVITHA VINOD"} texturefp={"/titletexture.jpg"} xval={0} yval={0} zval={0} />
         <Box scene={scene} xval={75} yval={0} zval={-129.904} texturefp={"/Experience.jpg"} name="experience"/>
-        <Box scene={scene} xval={-150} yval={0} zval={0} texturefp={"/Projects.jpg"} name="projects" /> 
-        <Box scene={scene} xval={75} yval={0} zval={129.904} texturefp={"/AboutMe.jpg"} name="aboutme" />
+        <Box scene={scene} xval={-150} yval={0} zval={0}  texturefp={"/AboutMe.jpg"} name="aboutme" /> 
+        <Box scene={scene} xval={75} yval={0} zval={129.904} texturefp={"/Projects.jpg"} name="projects" />
         <FooterNavbar Navpage={true}/>
       </>
       )

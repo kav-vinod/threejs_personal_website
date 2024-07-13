@@ -7,7 +7,8 @@ import AboutMe from './components/AboutMe';
 import Navbar from './components/Navbar';
 import Experience from './components/Experience'; 
 import Projects from './components/Projects'; 
-import Email from './components/Email'; 
+//import Email from './components/Email'; 
+import Email from './components/EmailAddOn'; 
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'; 
 //import MainPage from './components/MainPage';
 

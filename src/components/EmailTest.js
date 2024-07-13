@@ -1,8 +1,16 @@
-import React from "react"; 
+import React, {useRef, useState} from "react"; 
 import Navbar from './Navbar.jsx';
 import FooterLanding from './FooterLanding.jsx';
+import './EmailBox.css'
+
+//The useRef Hook allows you to persist values between renders.
+//It can be used to store a mutable value that does not cause a re-render when updated; can be used to access DOM elements 
+
+//useState manages the state of a functional component, triggers rerenders when value changes
+
 
 const onSubmit = async (event) => {
+  /*
     console.log(event); 
     
     event.preventDefault();
@@ -24,50 +32,41 @@ const onSubmit = async (event) => {
 
     if (res.success) {
       console.log("Success", res);
-    }
+    } 
 
-    //const name = document.getElementById("name")
-    //console.log(name); 
-    
+    */
   };
 
+
 const EmailEvent = () => {
-    
+      var nameRef = useRef(); 
+      var emailRef = useRef();
+      var messageRef = useRef();
+
+      var [thanks, setThanks] = useState(" "); 
+
+      //reset fields when submit button clicked
+      const Clear = () => {
+        nameRef.current.value = " "; 
+        emailRef.current.value = " "; 
+        messageRef.current.value = " ";
+
+        setThanks("Thanks for your email!");
+      }
+      
       return (
         <>
-         <style>
-                {`
-                    .input-field {
-                        border: 3px solid;
-                        border-image-slice: 1;
-                        border-width: 2px;
-                        border-image-source: linear-gradient(to right, black, blue900);
-                        padding: 10px;
-                        width: 100%;
-                        border-radius: 5px;
-                    }
-                    .text-field {
-                        border: 3px solid;
-                        border-image-slice: 1;
-                        border-width: 2px;
-                        border-image-source: linear-gradient(to right, black, blue900);
-                        padding: 10px;
-                        width: 100%;
-                        height: 200px;
-                        border-radius: 5px;
-                    }
-                `}
-        </style>
-        <div className=" py-20 px-10 items-center min-h-screen w-1/2">
+        <div className="emailbox">
           <form onSubmit={onSubmit}>
           <div className="w-full h-1/2 p-[5px] rounded-[20px] bg-gradient-to-r from-black to-blue-900" style={{ minHeight: '80vh' }}>
                 <div className="bg-gray-100 rounded-[20px] py-5 px-20 flex justify-evenly items-center flex-col" style={{ minHeight: '80vh' }}
                 >
                     <h3 className="text-blue-900 text-xl font-bold">Email</h3>
-                    <input className="bg-gray-100 text-blue-900 mt-4 input-field" type="text" name="name" placeholder="Name"/>
-                    <input className="bg-gray-100 text-blue-900 mt-4 input-field" type="email" name="email" placeholder="Email"/>
-                    <textarea className="bg-gray-100 text-blue-900 mt-4 text-field"  name="message" placeholder="Message"></textarea>
-                    <button onClick="name.value = '' && input.value = '' && textarea.value = ''" className="bg-gradient-to-r from-black to-blue-900 text-white rounded-full px-5 py-2 text-sm font-bold mx-2 my-4" type="submit">Submit Email</button>
+                    <input className="bg-gray-100 text-blue-900 mt-4 input-field" type="text" name="name" ref={nameRef} placeholder="Name"/>
+                    <input className="bg-gray-100 text-blue-900 mt-4 input-field" type="email" name="email" ref={emailRef} placeholder="Email"/>
+                    <textarea className="bg-gray-100 text-blue-900 mt-4 text-field"  name="message" ref={messageRef} placeholder="Message"></textarea>
+                    <button onClick={Clear}  className="bg-gradient-to-r from-black to-blue-900 text-white rounded-full px-5 py-2 text-sm font-bold mx-2 my-4" type="submit">Submit Email</button>
+                    <p className="text-blue-900 mt-4" >{thanks}</p>
                 </div>
                 </div>
           </form>

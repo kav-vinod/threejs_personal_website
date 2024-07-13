@@ -134,7 +134,7 @@ function AboutMe() {
         const intersects = raycaster.intersectObjects( scene.children );
         if (intersects.length > 0){
             if (intersects[0].object.name == "education") {
-               const text = "I graduated from Santa Clara University in 2024. I completed a Bachelor's in Computer Science (with an emphasis in Data Science) and a minor in Chemistry, because I wanted the versatility of a CS degree and to pursue my love for science. I had a wonderful time at SCU. I got the chance to be involved in a variety of clubs on campus, such as the Association of Computing Machinery (ACM) and Theta Tau, a professional engineering frat. I also appreciated the access I had to professors and formed meaningful with my peers. Go Broncos!"; 
+               const text = "I graduated from Santa Clara University in 2024. I completed a Bachelor's in Computer Science (with an emphasis in Data Science) and a minor in Chemistry, because I wanted the versatility of a CS degree and to pursue my love for science. I had a wonderful time at SCU. I got the chance to be involved in a variety of clubs on campus, such as the Association of Computing Machinery (ACM) and Theta Tau, a professional engineering frat. I also appreciated the access I had to professors and formed meaningful connections with my peers. Go Broncos!"; 
                const title = "Education";
                //popup set to arguments declared in if block (true is standard for all if blocks - we want the popup to show whenever the right object is clicked, so show will be true for all if blocks)
                //Popup component returned at bottom - shown when value in popup.show is true (look at Popup.js code and bottom of this page) 
@@ -275,7 +275,7 @@ function AboutMe() {
 
 
   function moveCamera(event) {
-      if (event.key === 'ArrowUp' && camera.position.z < 0) {
+      if (event.key === 'ArrowUp') {
         //console.log(theta); 
         //console.log((((theta - 90) / 180) % 2)); 
         //(theta-90) % 180 != 0

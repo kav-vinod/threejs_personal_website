@@ -1,7 +1,33 @@
 import { useEffect } from 'react';
 import * as THREE from 'three';
-import {fragmentShader} from './FragmentShader2.js'; 
+import {fragmentShader2} from './FragmentShader2.js'; 
+import {fragmentShader} from './FragmentShader.js'; 
+//import {fragmentShader3} from './FragmentShader3.js';
 import {vertexShader} from './VertexShader.js'; 
+
+const fragmentShader3 = `
+uniform float u_time;
+varying vec2 vUv;
+varying vec3 pos;
+varying vec3 norm;
+
+void main() {
+    vec3 purple = vec3(0.3, 0.3, 0.3);
+    
+    vec3 darkGrey = vec3(0.1, 0.1, 0.1);
+
+    vec3 offWhite = vec3(0.6, 0.6, 0.6);
+
+    vec3 colortop = mix(purple, darkGrey, norm.x); 
+
+    vec3 colorbottom = mix(offWhite, purple, norm.x); 
+
+    vec3 color = mix(colortop, colorbottom, norm.y); 
+
+    gl_FragColor = vec4(color, 1.0);
+}
+`;
+
 
 function Rings ({scene}) {
     useEffect(() => {
@@ -10,12 +36,12 @@ function Rings ({scene}) {
     };
 
 
-    var radius = 27.5; 
-    //var radius2 = 125; 
-    var radius2 = 0; 
-    var radius3 = 0; 
-    const geometry = new THREE.TorusGeometry( radius, 0.6, 16, 100 ); 
-    const geometry2 = new THREE.TorusGeometry( radius2, 0.6, 16, 100 );
+    var radius = 70; 
+    var radius2 = 110; 
+    var radius3 = 30; 
+    const geometry = new THREE.TorusGeometry( radius, 1, 16, 100 ); 
+    const geometry2 = new THREE.TorusGeometry( radius2, 1, 16, 100 );
+    const geometry3 = new THREE.TorusGeometry( radius3, 1, 16, 100 );
 
     const wireframe = new THREE.WireframeGeometry( geometry );
     const border = new THREE.LineBasicMaterial({ color: 0xffffff});
@@ -25,8 +51,34 @@ function Rings ({scene}) {
     line.material.transparent = true;
 
     const material = new THREE.ShaderMaterial({
-        vertexShader,
-        fragmentShader,
+        vertexShader: vertexShader,
+        fragmentShader: fragmentShader2,
+        uniforms: {
+            u_time: {
+                type: 'f', 
+                value: test.clock.getElapsedTime(),
+            }
+            
+        }, 
+        lighting: true
+    });
+
+    const material2 = new THREE.ShaderMaterial({
+        vertexShader: vertexShader,
+        fragmentShader: fragmentShader3,
+        uniforms: {
+            u_time: {
+                type: 'f', 
+                value: test.clock.getElapsedTime(),
+            }
+            
+        }, 
+        lighting: true
+    });
+
+    const material3 = new THREE.ShaderMaterial({
+        vertexShader: vertexShader,
+        fragmentShader: fragmentShader,
         uniforms: {
             u_time: {
                 type: 'f', 
@@ -38,140 +90,102 @@ function Rings ({scene}) {
     });
 
     var Ring = new THREE.Mesh( geometry, material );
-    var Ring2 = null; 
-    //var Ring2 = new THREE.Mesh( geometry2, material );
-    var Ring3 = null;
+    var Ring2 = new THREE.Mesh( geometry2, material2 );
+    var Ring3 = new THREE.Mesh( geometry3, material3 );
 
     Ring.rotation.set(Math.PI / 2, 0, 0); 
-    //Ring2.rotation.set(Math.PI / 2, 0, 0); 
+    Ring2.rotation.set(Math.PI / 2, 0, 0); 
+    Ring3.rotation.set(Math.PI / 2, 0, 0); 
 
     scene.add( Ring );
-    //scene.add( Ring2 );
+    scene.add( Ring2 );
+    scene.add( Ring3 );
 
     var to_remove = Ring; 
-    //var to_remove2 = Ring2; 
-    var to_remove2 = null; 
-    var to_remove3 = null; 
+    var to_remove2 = Ring2; 
+    var to_remove3 = Ring3; 
     
     //helps reset the direction
     var out = true;  
     var cycles = 0; 
+    var prev_cycle = 0; 
 
-    var initiated_second = false;
-    var initiated_third = false;  
+    var flash = false; 
+
     //material.uniforms.u_time.value = (test.clock.getElapsedTime() % 0.7895 );
 
-    var reset = false; 
-    var reset2 = false;
-    var reset3 = false;
-
     const animate = () => {
+        var material_use1 = material; 
+        var material_use2 = material2;
+
         scene.remove(to_remove);
-
-        if (to_remove2 != null){
-            scene.remove(to_remove2); 
-        }
-
-        if (to_remove3 != null){
-            scene.remove(to_remove3);
-        }
+        scene.remove(to_remove2);
+        scene.remove(to_remove3);
 
         cycles = Math.floor(test.clock.getElapsedTime() / 0.7895); 
         
         if (cycles % 2 == 0){
             material.uniforms.u_time.value = ((test.clock.getElapsedTime() % 0.7895 ));
+            material2.uniforms.u_time.value = ((test.clock.getElapsedTime() % 0.7895 ));
+            material3.uniforms.u_time.value = ((test.clock.getElapsedTime() % 0.7895 ));
         }
         else{
             material.uniforms.u_time.value = 0.7895 - (test.clock.getElapsedTime() % 0.7895 ); 
+            material2.uniforms.u_time.value = 0.7895 - (test.clock.getElapsedTime() % 0.7895 ); 
+            material3.uniforms.u_time.value = 0.7895 - (test.clock.getElapsedTime() % 0.7895 ); 
            
         }
         
-        
+        //Ring.rotation.z += 0.01
 
-        if (cycles % 3 == 0 && reset == false) {
-            radius = 27.5; 
-            reset = true; 
-        } 
-        else {
-            radius += 0.65;
-        }
-
-        if (cycles % 3 != 0) reset = false; 
-
-        if ((cycles - 1) % 3 == 0 && reset2 == false) {
-            radius2 = 27.5; 
-            reset2 = true; 
-        } 
-        else {
-            if (radius2 >= 27.5){
-                radius2 += 0.65; 
-            }
-        }
-
-        if ((cycles - 1) % 3 != 0) reset2 = false; 
-
-        if ((cycles - 2) % 3 == 0 && reset3 == false) {
-            radius3 = 27.5; 
-            reset3 = true; 
-        } 
-        else {
-            if (radius3 >= 27.5){
-                radius3 += 0.65; 
-            }
-        }
-
-        if ((cycles - 2) % 3 != 0) reset3 = false; 
-
-        /*
-
-        if (radius >= 125 && out == true){
+        if (radius >= 110){
             out = false; 
         }
-        if  (radius <= 70 && out == false){
+        if  (radius <= 70){
             out = true; 
+             
         }
         if (out == true){
-            //determines speed of reduction
-            radius += 0.35;
-            radius2 -= 0.35;
+            radius += 0.28;
+            radius2 -= 0.28;
+
         }
         else {
-            radius -= 0.35; 
-            radius2 += 0.35; 
-
+            radius -= 0.28; 
+            radius2 += 0.28;  
         }
-        */
+        
+        if (Math.abs(radius - radius2) < 5){
+            material_use1 = material3; 
+            material_use2 = material3; 
+        }
         //create new rings w/ updated radius 
-        const geometry = new THREE.TorusGeometry( radius, 0.6, 16, 100 ); 
+        const geometry = new THREE.TorusGeometry( radius, 1, 16, 100 );
+        const geometry2 = new THREE.TorusGeometry( radius2, 1, 16, 100 ); 
+        const geometry3 = new THREE.TorusGeometry( radius3, 1, 16, 100 ); 
 
-        Ring = new THREE.Mesh( geometry, material );
+        Ring = new THREE.Mesh( geometry, material_use1 );
         Ring.rotation.set(Math.PI / 2, 0, 0); 
 
+        Ring2 = new THREE.Mesh( geometry2, material_use2 );
+        Ring2.rotation.set(Math.PI / 2, 0, 0); 
+
+        Ring3 = new THREE.Mesh( geometry3, material3 );
+        Ring3.rotation.set(Math.PI / 2, 0, 0); 
+
         //reset to_remove so the rings are removed in the next run of the animate function
-        to_remove = Ring;
+        to_remove = Ring; 
+        to_remove2 = Ring2; 
+        to_remove3 = Ring3;
 
-        //add Ring
+        //console.log(Ring); 
+        //console.log(Ring2); 
+        //console.log(Ring3);
+
+        //add Rings
         scene.add( Ring );
-        
-        if (test.clock.getElapsedTime() > 0.7895){
-            if (initiated_second == false) radius2 = 27.5; 
-            const geometry2 = new THREE.TorusGeometry( radius2, 0.6, 16, 100 ); 
-            Ring2 = new THREE.Mesh( geometry2, material );
-            Ring2.rotation.set(Math.PI / 2, 0, 0); 
-            to_remove2 = Ring2; 
-            scene.add( Ring2 );
-            initiated_second = true; 
-        }
-
-        if (test.clock.getElapsedTime() > 1.579){
-            if (initiated_third == false) radius3 = 27.5; 
-            const geometry3 = new THREE.TorusGeometry( radius3, 0.6, 16, 100 ); 
-            Ring3 = new THREE.Mesh( geometry3, material );
-            Ring3.rotation.set(Math.PI / 2, 0, 0); 
-            to_remove3 = Ring3; 
-            scene.add( Ring3 );
-            initiated_third = true; 
-        }
+        scene.add( Ring2 );
+        //scene.add( Ring3 );
 
         requestAnimationFrame(animate); 
     };

@@ -45,7 +45,7 @@ const ServiceCard = ({ title, year, picture, description }) => {
     const [isExpanded, setIsExpanded] = useState(false);
     return (
         <>
-        <Tilt className="xs:w-[250px] w-full">
+        <div className="xs:w-[250px] w-full">
                 <div className="w-full p-[3px] rounded-[20px] bg-white">
                 <div
                     options={{
@@ -70,7 +70,7 @@ const ServiceCard = ({ title, year, picture, description }) => {
                      } 
                 </div>
                 </div>
-        </Tilt>
+        </div>
     </>
     );
 };
@@ -90,7 +90,7 @@ const Experience = () => {
                     }
                 `}
         </style>
-        <div className="px-20 py-10 mt-20 flex flex-wrap gap-10">
+        <div className="px-[5%] py-[2%] mt-20 flex flex-wrap gap-10">
             {services.map((service) => (
                 <ServiceCard key={service.title} {...service} />
             ))}

@@ -14,7 +14,7 @@ const FooterLanding = () => {
     };
     return (
         <footer style={footerStyle} >
-            <p className="text-black flex-1">&copy; 2024 Kavitha Vinod</p>
+            <p className="text-black flex-1 text-xl">&copy; 2024 Kavitha Vinod</p>
         </footer>
     )
 } 

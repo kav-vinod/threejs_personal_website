@@ -11,6 +11,7 @@ import Centerpiece from './Centerpiece.js'
 //import { Text3D, Box } from '@react-three/drei';
 import {useLocation} from 'react-router-dom'
 import Navbar from './Navbar.jsx';
+import NavbarLanding from './NavbarLanding.jsx';
 import FooterNavbar from './FooterNavbar.jsx';
 import { useNavigate } from 'react-router-dom';
 
@@ -28,6 +29,28 @@ function HomeStart() {
   const camPosX = location.state.camPosX; 
   const camPosY = location.state.camPosY; 
   const camPosZ = location.state.camPosZ; 
+
+
+  const handleLeftButton = useRef(false);
+  const handleRightButton = useRef(false);
+
+  const handleLeftButtonClick = () => {
+    console.log("left button clicked");
+    handleLeftButton.current = true; 
+    //console.log("handleLeftButton updated:", handleLeftButton.current);
+  };
+
+  const handleRightButtonClick = () => {
+    handleRightButton.current = true; 
+  };
+
+  const handleLeftButtonReleased = () => {
+    handleLeftButton.current = false; 
+  };
+
+  const handleRightButtonReleased = () => {
+    handleRightButton.current = false; 
+  };
   
   useEffect(() => {
     // === THREE.JS CODE START ===
@@ -197,6 +220,7 @@ function HomeStart() {
     }
   }
 
+
     var animate = function () {
       requestAnimationFrame(animate);
       renderer.render(scene, camera);
@@ -225,47 +249,109 @@ function HomeStart() {
     //function is the event handler for the doc.body.onscroll event 
     //camera.rotation.y = 360; 
     camera.rotation.y = 0; 
-    function moveCamera(event) {
-      if (event.key === 'ArrowLeft') {
-        theta = theta + 1; 
-        var radians = theta * (Math.PI / 180); 
-        var newz = radius * Math.sin(radians); 
+    function moveCamera(direction) {
+        if (direction === 'left') {
+          console.log("theta updated:", theta);
+          theta += 1; // Adjust the angle for left movement
+        } else if (direction === 'right') {
+          theta -= 1; // Adjust the angle for right movement
+        }
+        
+        var radians = theta * (Math.PI / 180);
+        var newz = radius * Math.sin(radians);
         var newx = radius * Math.cos(radians);
 
-        camera.position.z = newz; 
-        camera.position.x = newx; 
+        camera.position.z = newz;
+        camera.position.x = newx;
+        camera.lookAt(0, 0, 0);
 
-        camera.lookAt(0, 0, 0); 
-
-        
-
-        //console.log(camera.rotation.y); 
-      }
-      if (event.key === 'ArrowRight') {
-        theta = theta - 1; 
-        var radians = theta * (Math.PI / 180); 
-        var newz = radius * Math.sin(radians); 
-        var newx = radius * Math.cos(radians); 
-
-        camera.position.z = newz; 
-        camera.position.x = newx; 
-
-
-        camera.lookAt(0, 0, 0); 
-      }
+        console.log("camera position updated:", camera.position.x);
     }
+    
+    function cameraResponsetoKey(event) {
+        if (event.key === 'ArrowLeft') {
+            moveCamera('left');
+        } else if (event.key === 'ArrowRight') {
+            moveCamera('right');
+        }
+            
+    }
+
+    function respondToLeftAndRightClicks() {
+      console.log("handleLeftButton updated:", handleLeftButton.current);
+      if (handleLeftButton.current == true) {
+        moveCamera('left');
+      }
+      
+      else if (handleRightButton.current == true) {
+        moveCamera('right');
+      }
+
+      console.log("handleLeftButton updated:", handleLeftButton.current);
+    }
+
+    let isTouching = false;
+
+    const handleTouchStart = () => {
+        isTouching = true; // Touch has started
+    };
+
+    var lastTouchX = null;
+    var lastTouchY = null;
+
+    const handleTouchMove = (event) => {
+        if (isTouching) {
+            const touchX = event.touches[0].clientX; // Get current touch position
+            const touchY = event.touches[0].clientY;
+            
+            // You can use lastTouchX and lastTouchY for calculations
+            if (lastTouchX == null) {
+              lastTouchX = touchX;
+            }
+            if (lastTouchY == null) {
+              lastTouchY = touchY;
+            }
+            const deltaX = touchX - lastTouchX; // Calculate the change in X
+            const deltaY = touchY - lastTouchY; // Calculate the change in Y
+
+            if (deltaX > 0) {
+              moveCamera('left');
+            }
+            else if (deltaX < 0) {
+              moveCamera('right');
+            }
+            // Update last touch position for the next move
+            lastTouchX = touchX;
+            lastTouchY = touchY;
+        }
+    };
+
+    const handleTouchEnd = () => {
+        isTouching = false; // Touch has ended
+    };
 
     //eventListeners
     window.addEventListener('resize', handleResize);
-    window.addEventListener('keydown', moveCamera);
+    window.addEventListener('keydown', cameraResponsetoKey);
     window.addEventListener( 'pointermove', onPointerMove );
     window.addEventListener( 'pointermove', render );
     window.addEventListener( 'click', handleClicks );
+    //window.addEventListener( 'click', respondToLeftAndRightClicks );
+    //window.addEventListener( 'mousedown', respondToLeftAndRightClicks );
+    window.addEventListener('touchstart', handleTouchStart);
+    window.addEventListener('touchmove', handleTouchMove);
+    window.addEventListener('touchend', handleTouchEnd);
+
 
     //window.requestAnimationFrame(render);
     return () => {
         window.removeEventListener('resize', handleResize);
         window.removeEventListener('keydown', moveCamera); 
+        window.removeEventListener('pointermove', onPointerMove);
+        window.removeEventListener('pointermove', render);
+        window.removeEventListener('touchstart', handleTouchStart);
+        window.removeEventListener('touchmove', handleTouchMove);
+        window.removeEventListener('touchend', handleTouchEnd);
     };
     //<Boxstars scene={scene} />
     //<Contact scene={scene} texturefp={"/githublogo.jpg"} link={"https://github.com/kav-vinod"} xval={0} yval={-100} zval={0}/>
@@ -276,7 +362,7 @@ function HomeStart() {
       {scene &&
       (
       <>
-        <Navbar />
+        <NavbarLanding text={"KV"} route={"/start"} />
         <Contact scene={scene} texturefp={"/githublogo.jpg"} link={"https://github.com/kav-vinod"} xval={-75} yval={0} zval={-129.904} name="github"/>
         <Contact scene={scene} texturefp={"/linkedinlogo.jpg"} link={"https://www.linkedin.com/in/kavitha-m-vinod/"} xval={-75} yval={0} zval={129.904} name="linkedin"/>
         <Contact scene={scene} texturefp={"/maillogo.jpg"} link={"https://www.linkedin.com/in/kavitha-m-vinod/"} xval={150} yval={0} zval={0} name="mail"/>

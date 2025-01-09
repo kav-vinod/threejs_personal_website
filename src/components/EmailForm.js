@@ -10,7 +10,7 @@ import './EmailBox.css'
 
 
 const onSubmit = async (event) => {
-  /*
+  
     console.log(event); 
     
     event.preventDefault();
@@ -34,7 +34,7 @@ const onSubmit = async (event) => {
       console.log("Success", res);
     } 
 
-    */
+    
   };
 
 
@@ -45,13 +45,19 @@ const EmailEvent = () => {
 
       var [thanks, setThanks] = useState(" "); 
 
+      const WaitandClear = () => {
+        setThanks("Thanks for your email!");
+        setTimeout(Clear, 2000); 
+      }
+
       //reset fields when submit button clicked
       const Clear = () => {
+
         nameRef.current.value = " "; 
         emailRef.current.value = " "; 
         messageRef.current.value = " ";
 
-        setThanks("Thanks for your email!");
+        setThanks(null);
       }
       
       return (
@@ -65,7 +71,7 @@ const EmailEvent = () => {
                     <input className="bg-gray-100 text-blue-900 mt-4 input-field" type="text" name="name" ref={nameRef} placeholder="Name"/>
                     <input className="bg-gray-100 text-blue-900 mt-4 input-field" type="email" name="email" ref={emailRef} placeholder="Email"/>
                     <textarea className="bg-gray-100 text-blue-900 mt-4 text-field"  name="message" ref={messageRef} placeholder="Message"></textarea>
-                    <button onClick={Clear}  className="bg-gradient-to-r from-black to-blue-900 text-white rounded-full px-5 py-2 text-sm font-bold mx-2 my-4" type="submit">Submit Email</button>
+                    <button onClick={WaitandClear }  className="bg-gradient-to-r from-black to-blue-900 text-white rounded-full px-5 py-2 text-sm font-bold mx-2 my-4" type="submit">Submit Email</button>
                     <p className="text-blue-900 mt-4" >{thanks}</p>
                 </div>
                 </div>

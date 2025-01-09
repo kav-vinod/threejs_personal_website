@@ -10,7 +10,7 @@ import './EmailBox.css'
 
 
 const onSubmit = async (event) => {
-  
+
     console.log(event); 
     
     event.preventDefault();
@@ -38,7 +38,7 @@ const onSubmit = async (event) => {
   };
 
 
-const EmailEvent = () => {
+const EmailEvent = ({isMobile}) => {
       var nameRef = useRef(); 
       var emailRef = useRef();
       var messageRef = useRef();
@@ -62,7 +62,24 @@ const EmailEvent = () => {
       
       return (
         <>
+        {isMobile ? 
         <div className="emailbox">
+          <form onSubmit={onSubmit}>
+          <div className="w-full h-full p-[5px] rounded-[20px] bg-gradient-to-r from-black to-blue-900" style={{ minHeight: '80vh' }}>
+                <div className="bg-gray-100 rounded-[20px] py-5 px-20 flex justify-evenly items-center flex-col" style={{ minHeight: '80vh' }}
+                >
+                    <h3 className="text-blue-900 text-xl font-bold">Email</h3>
+                    <input className="bg-gray-100 text-blue-900 mt-4 input-field" type="text" name="name" ref={nameRef} placeholder="Name"/>
+                    <input className="bg-gray-100 text-blue-900 mt-4 input-field" type="email" name="email" ref={emailRef} placeholder="Email"/>
+                    <textarea className="bg-gray-100 text-blue-900 mt-4 text-field"  name="message" ref={messageRef} placeholder="Message"></textarea>
+                    <button onClick={WaitandClear }  className="bg-gradient-to-r from-black to-blue-900 text-white rounded-full px-5 py-2 text-sm font-bold mx-2 my-4" type="submit">Submit Email</button>
+                    <p className="text-blue-900 mt-4" >{thanks}</p>
+                </div>
+                </div>
+          </form>
+          </div>
+          :
+          <div className="emailbox">
           <form onSubmit={onSubmit}>
           <div className="w-full h-1/2 p-[5px] rounded-[20px] bg-gradient-to-r from-black to-blue-900" style={{ minHeight: '80vh' }}>
                 <div className="bg-gray-100 rounded-[20px] py-5 px-20 flex justify-evenly items-center flex-col" style={{ minHeight: '80vh' }}
@@ -77,6 +94,7 @@ const EmailEvent = () => {
                 </div>
           </form>
           </div>
+        }
         </>
       );
 }

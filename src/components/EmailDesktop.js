@@ -183,7 +183,7 @@ function Email() {
             {scene && (
                 <>
                     <Navbar />
-                    <EmailEvent />
+                    <EmailEvent isMobile={false}/>
                     <FooterLanding />
                 </>
             )}

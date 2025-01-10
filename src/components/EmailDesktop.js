@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import FooterLanding from './FooterLanding.jsx';
 import Navbar from './Navbar.jsx';
-import EmailEvent from "./EmailTest.js";
+import EmailEvent from "./EmailForm.js";
 import Popup from "./Popup.js";
 
 function Email() {
@@ -183,7 +183,7 @@ function Email() {
             {scene && (
                 <>
                     <Navbar />
-                    <EmailEvent />
+                    <EmailEvent isMobile={false}/>
                     <FooterLanding />
                 </>
             )}

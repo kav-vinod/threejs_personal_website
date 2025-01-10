@@ -237,7 +237,7 @@ function Home() {
       {scene && camera && 
       (
       <>
-        <NavbarLanding />
+        <NavbarLanding text={"Go to Navbar"} route={"/"} />
         <Boxstars scene={scene} />
         <Rings scene={scene} />
         <Centerpiece scene={scene} texturefp={"/centerpiecetexture.jpg"} xval={0} yval={0} zval={0} />

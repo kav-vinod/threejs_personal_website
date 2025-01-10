@@ -8,7 +8,9 @@ import Navbar from './components/Navbar';
 import Experience from './components/Experience'; 
 import Projects from './components/Projects'; 
 //import Email from './components/Email'; 
-import Email from './components/EmailAddOn'; 
+import Email from './components/EmailDesktop'; 
+import EmailMobile from './components/EmailMobile'; 
+import {isMobile} from 'react-device-detect';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'; 
 //import MainPage from './components/MainPage';
 
@@ -32,7 +34,7 @@ function App() {
           <Route path="/aboutme" element={<AboutMe/>} />
         </Routes>
         <Routes>
-          <Route path="/email" element={<Email/>} />
+          <Route path="/email" element={isMobile ? <EmailMobile/> : <Email/>} />
         </Routes>
       </Router>
     </div>

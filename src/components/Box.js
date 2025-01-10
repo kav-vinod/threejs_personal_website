@@ -44,39 +44,6 @@ function Box({ scene, xval, yval, zval, texturefp, name }) {
         };
         var curr_x = xval;
         var curr_z = zval;
-        const screen_rotate = () => {
-            const radius = Math.abs(xval); // Use the absolute value of xval as the radius
-        
-            // Calculate the next x position based on the current position
-            var new_x = 0; 
-            var new_z = 0; 
-            if (curr_x > 0 && curr_x <= radius && curr_z < radius && curr_z >= 0){
-                new_x = curr_x - 1; 
-                new_z = -(Math.sqrt(Math.pow(radius, 2) - Math.pow(new_x, 2)));
-            }
-            else if (curr_x < 0 && curr_x >= -radius && curr_z < -radius && curr_z >= 0){
-                new_x = curr_x + 1; 
-                new_z = Math.sqrt(Math.pow(radius, 2) - Math.pow(new_x, 2));
-            }
-            else if (curr_x <= 0 && curr_x > -radius && curr_z >= -radius && curr_z < 0){
-                new_x = curr_x - 1; 
-                new_z = -(Math.sqrt(Math.pow(radius, 2) - Math.pow(new_x, 2)));
-            }
-            else {
-                new_x = curr_x + 1; 
-                new_z = Math.sqrt(Math.pow(radius, 2) - Math.pow(new_x, 2));
-            }
-        
-            // Update box and edges positions
-            boxMesh.position.x = new_x;
-            boxMesh.position.z = new_z;
-            edges.position.x = new_x;
-            edges.position.z = new_z;
-
-            //update curr_x 
-            curr_x = new_x; 
-            curr_z = new_z; 
-        };
         
         // Start animation loop
         animate();

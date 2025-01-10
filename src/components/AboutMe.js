@@ -274,8 +274,8 @@ function AboutMe() {
     }
 
 
-  function moveCamera(event) {
-      if (event.key === 'ArrowUp') {
+  function moveCamera(direction) {
+      if (direction == "up") {
         //console.log(theta); 
         //console.log((((theta - 90) / 180) % 2)); 
         //(theta-90) % 180 != 0
@@ -317,7 +317,7 @@ function AboutMe() {
         }
        
       }
-      if (event.key === 'ArrowDown' && camera.position.z < 0) {
+      if (direction == "down" && camera.position.z < 0) {
         //console.log(theta); 
         //console.log(Math.floor((((theta - 90) / 180) % 2))); 
         if (Math.floor(((theta - 90) / 180)) % 2 == 0){
@@ -366,16 +366,46 @@ function AboutMe() {
       }
     }
 
+    function moveCameraKey(event) {
+      if (event.key === 'ArrowUp') {
+        moveCamera("up");
+      }
+      else if (event.key === 'ArrowDown') {
+        moveCamera("down");
+      }
+    }
+    var lastTouchX = null; 
+    const moveCameraTouch = (event) => {
+      // Get current touch y position
+      const touchX = event.touches[0].clientX;
+      
+      if (lastTouchX == null) {
+        lastTouchX = touchX;
+      }
+      const deltaX = touchX - lastTouchX; // Calculate the change in Y
+
+      if (deltaX > 0) {
+        moveCamera('up');
+      }
+      else if (deltaX < 0) {
+        moveCamera('down');
+      }
+      // Update last touch position for the next move
+      lastTouchX = touchX;
+    }
+
     //eventListeners
     window.addEventListener('resize', handleResize);
-    window.addEventListener('keydown', moveCamera);
+    window.addEventListener('keydown', moveCameraKey);
+    window.addEventListener('touchmove', moveCameraTouch);
     window.addEventListener( 'pointermove', onPointerMove );
     window.addEventListener( 'pointermove', raycasterFunction );
     window.addEventListener( 'click', handleClicks );
     //window.requestAnimationFrame(render);
     return () => {
         window.removeEventListener('resize', handleResize);
-        window.removeEventListener('keydown', moveCamera);
+        window.removeEventListener('keydown', moveCameraKey);
+        window.removeEventListener('touchmove', moveCameraTouch);
         window.removeEventListener( 'pointermove', onPointerMove );
         window.removeEventListener( 'pointermove', raycasterFunction );
         window.removeEventListener( 'click', handleClicks ); 

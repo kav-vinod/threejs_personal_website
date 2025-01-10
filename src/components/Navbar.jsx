@@ -1,6 +1,9 @@
+import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom'
+import NavbarDropdown from './NavbarDropdown.jsx'
 import HomeStart from './HomeStart.js'
-const Navbar = () => {
+
+const Navbar = ({ onLeftClick, onRightClick, onLeftReleased, onRightReleased }) => {
     const navigate = useNavigate();
 
     const handleNavLinkClick = (route, stateProps) => {
@@ -21,6 +24,7 @@ const Navbar = () => {
                         <p className="blue-gradient_text">Navbar</p>
                 </NavLink>
             </nav>
+            {/*
             <nav className="flex text-lg gap-5 font-bold">
                 <NavLink to="/experience" 
                     onClick={() => handleNavLinkClick} 
@@ -38,7 +42,11 @@ const Navbar = () => {
                      <p >Contact Me!</p>
                 </NavLink>
             </nav>  
-            
+            */}
+            <div className="ml-auto">
+                <NavbarDropdown />
+            </div>
+           
         </header>
     )
 }

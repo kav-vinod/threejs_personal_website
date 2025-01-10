@@ -51,7 +51,7 @@ const ServiceCard = ({ title, tagline, description, technologies, link }) => {
                         scale: 1,
                         speed: 450
                     }}
-                    className="bg-gradient-to-r from-black to-blue-900 rounded-[20px] py-10 px-20 min-h-[280px] flex justify-evenly items-center flex-col"
+                    className="bg-gradient-to-r from-black to-blue-900 rounded-[20px] py-[5%] px-[10%] min-h-[280px] flex justify-evenly items-center flex-col"
                 >
                     <h3 className="text-white text-xl font-bold">{title}</h3>
                     <p className="text-white text-l font-bold">{tagline}</p>

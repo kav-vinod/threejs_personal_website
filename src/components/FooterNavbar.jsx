@@ -24,7 +24,7 @@ const FooterNavbar = (Navpage) => {
                 <p className="text-black px-5 text-xl">&copy; 2024 Kavitha Vinod</p>
             </div>
             <div className="flex-1 text-center text-xl">
-                {Firstmessage ?  swipe ? <p className="text-black">Swipe left and right to navigate</p> : <p className="text-black">Navigate with left and right arrow keys</p>  : <p className="text-black">Navigate with up and down arrow keys</p> } 
+                {Firstmessage ?  swipe ? <p className="text-black">Swipe left and right to navigate</p> : <p className="text-black">Navigate with left and right arrow keys</p>  :  swipe ? <p className="text-black">Swipe left and right to navigate</p> : <p className="text-black">Navigate with up and down arrow keys</p> } 
             </div>
             <div className="flex-1"></div>
         </footer>

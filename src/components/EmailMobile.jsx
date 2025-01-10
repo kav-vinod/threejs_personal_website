@@ -4,6 +4,7 @@ import Navbar from './Navbar.jsx';
 import FooterStatic from './FooterStatic.jsx';
 
 const EmailMobile = () => {
+    console.log("EmailMobile");
     return (
         <>
         <Navbar/>
@@ -17,7 +18,9 @@ const EmailMobile = () => {
                     }
                 `}
         </style>
-        <EmailEvent isMobile={true}/>
+        <div className="items-center justify-center pt-[22.5%] px-[10%]">
+            <EmailEvent isMobile={true}/>
+        </div>
         <FooterStatic />
         </>
     );

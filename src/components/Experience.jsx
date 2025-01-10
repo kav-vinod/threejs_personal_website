@@ -9,6 +9,12 @@ import FooterStatic from './FooterStatic.jsx';
 
 const services = [
     {
+        title: "Software Engineer and Product Manager at JIFFY.ai", 
+        year: "Aug 2024 - Current",
+        picture: "./jiffylogo.jpg",
+        description: ["Working on a fintech application."]
+      },
+    {
       title: "Santa Clara University ACM Board Member", 
       year: "Oct 2021 - May 2024",
       picture: "./acmlogo.jpg", 
@@ -53,7 +59,7 @@ const ServiceCard = ({ title, year, picture, description }) => {
                         scale: 1,
                         speed: 450
                     }}
-                    className="bg-gradient-to-r from-black to-blue-900 bg-white rounded-[20px] py-5 px-20 min-h-[280px] flex justify-evenly items-center flex-col"
+                    className="bg-gradient-to-r from-black to-blue-900 bg-white rounded-[20px] py-[2.5%] px-[10%] min-h-[280px] flex justify-evenly items-center flex-col"
                 >
                     <h3 className="text-white text-xl font-bold">{title}</h3>
                     <img src={picture} width='75px' height='75px' padding='5px' className="rounded-[10px]" />

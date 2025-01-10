@@ -39,6 +39,7 @@ const onSubmit = async (event) => {
 
 
 const EmailEvent = ({isMobile}) => {
+      console.log(isMobile);
       var nameRef = useRef(); 
       var emailRef = useRef();
       var messageRef = useRef();
@@ -63,10 +64,9 @@ const EmailEvent = ({isMobile}) => {
       return (
         <>
         {isMobile ? 
-        <div className="emailbox">
           <form onSubmit={onSubmit}>
-          <div className="w-full h-full p-[5px] rounded-[20px] bg-gradient-to-r from-black to-blue-900" style={{ minHeight: '80vh' }}>
-                <div className="bg-gray-100 rounded-[20px] py-5 px-20 flex justify-evenly items-center flex-col" style={{ minHeight: '80vh' }}
+          <div className="w-full p-[5px] rounded-[20px] bg-gradient-to-r from-black to-blue-900 items-center">
+                <div className="bg-gray-100 rounded-[20px] py-[3%] px-[5%] flex justify-evenly items-center flex-col"
                 >
                     <h3 className="text-blue-900 text-xl font-bold">Email</h3>
                     <input className="bg-gray-100 text-blue-900 mt-4 input-field" type="text" name="name" ref={nameRef} placeholder="Name"/>
@@ -77,7 +77,6 @@ const EmailEvent = ({isMobile}) => {
                 </div>
                 </div>
           </form>
-          </div>
           :
           <div className="emailbox">
           <form onSubmit={onSubmit}>

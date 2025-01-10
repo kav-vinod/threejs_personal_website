@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom'
+import NavbarDropdown from './NavbarDropdown.jsx'
 import HomeStart from './HomeStart.js'
 
 const Navbar = ({ onLeftClick, onRightClick, onLeftReleased, onRightReleased }) => {
@@ -42,17 +43,8 @@ const Navbar = ({ onLeftClick, onRightClick, onLeftReleased, onRightReleased }) 
                 </NavLink>
             </nav>  
             */}
-            <div className="flex text-lg gap-5 font-bold">
-                <button 
-                    onMouseDown={() => { console.log('Left button pressed'); onLeftClick(); }} 
-                    onMouseUp={() => { console.log('Left button released'); onLeftReleased();}}>
-                    Left
-                </button>
-                <button 
-                    onMouseDown={() => { console.log('Right button pressed'); onRightClick(); }} 
-                    onMouseUp={() => { console.log('Right button released'); onRightReleased(); }}>
-                    Right
-                </button>
+            <div className="ml-auto">
+                <NavbarDropdown />
             </div>
            
         </header>

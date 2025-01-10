@@ -374,14 +374,24 @@ function AboutMe() {
         moveCamera("down");
       }
     }
+    var lastTouchX = null; 
+    const moveCameraTouch = (event) => {
+      // Get current touch y position
+      const touchX = event.touches[0].clientX;
+      
+      if (lastTouchX == null) {
+        lastTouchX = touchX;
+      }
+      const deltaX = touchX - lastTouchX; // Calculate the change in Y
 
-    function moveCameraTouch(event) {
-      if (event.touches[0].clientX > window.innerWidth / 2) {
-        moveCamera("up");
+      if (deltaX > 0) {
+        moveCamera('up');
       }
-      else {
-        moveCamera("down");
+      else if (deltaX < 0) {
+        moveCamera('down');
       }
+      // Update last touch position for the next move
+      lastTouchX = touchX;
     }
 
     //eventListeners

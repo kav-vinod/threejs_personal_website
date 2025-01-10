@@ -277,19 +277,6 @@ function HomeStart() {
             
     }
 
-    function respondToLeftAndRightClicks() {
-      console.log("handleLeftButton updated:", handleLeftButton.current);
-      if (handleLeftButton.current == true) {
-        moveCamera('left');
-      }
-      
-      else if (handleRightButton.current == true) {
-        moveCamera('right');
-      }
-
-      console.log("handleLeftButton updated:", handleLeftButton.current);
-    }
-
     let isTouching = false;
 
     const handleTouchStart = () => {
@@ -336,8 +323,6 @@ function HomeStart() {
     window.addEventListener( 'pointermove', onPointerMove );
     window.addEventListener( 'pointermove', render );
     window.addEventListener( 'click', handleClicks );
-    //window.addEventListener( 'click', respondToLeftAndRightClicks );
-    //window.addEventListener( 'mousedown', respondToLeftAndRightClicks );
     window.addEventListener('touchstart', handleTouchStart);
     window.addEventListener('touchmove', handleTouchMove);
     window.addEventListener('touchend', handleTouchEnd);

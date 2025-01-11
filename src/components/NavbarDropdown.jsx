@@ -15,7 +15,7 @@ const NavbarDropdown = () => {
     return (
         <div className="relative flex flex-col items-center justify-center">
             <div className="relative items-center">
-            <button onClick={toggleDropdown}>
+            <button className="w-10 h-10 rounded-lg bg-white items-center justify-center flex shadow-md" onClick={toggleDropdown}>
                 <div className="py-[5%] px-[20%]">
                     <FaBars />
                 </div>

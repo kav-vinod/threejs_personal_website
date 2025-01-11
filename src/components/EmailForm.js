@@ -11,12 +11,13 @@ import './EmailBox.css'
 
 const onSubmit = async (event) => {
 
-    console.log(event); 
+    //console.log(event); 
     
     event.preventDefault();
     const formData = new FormData(event.target);
 
-    formData.append("access_key", "57bf412d-c318-409e-90f7-9f444d13213e");
+    const emailApiKey = process.env.REACT_APP_EMAIL_API_KEY;
+    formData.append("access_key", emailApiKey);
 
     const object = Object.fromEntries(formData);
     const json = JSON.stringify(object);
@@ -31,7 +32,7 @@ const onSubmit = async (event) => {
     }).then((res) => res.json());
 
     if (res.success) {
-      console.log("Success", res);
+      //console.log("Success", res);
     } 
 
     

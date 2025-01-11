@@ -3,6 +3,7 @@ import Navbar from './Navbar.jsx';
 import FooterLanding from './FooterLanding.jsx';
 import './EmailBox.css'
 
+
 //The useRef Hook allows you to persist values between renders.
 //It can be used to store a mutable value that does not cause a re-render when updated; can be used to access DOM elements 
 
@@ -18,6 +19,8 @@ const onSubmit = async (event) => {
 
     const emailApiKey = process.env.REACT_APP_EMAIL_API_KEY;
     formData.append("access_key", emailApiKey);
+
+    console.log(emailApiKey);
 
     const object = Object.fromEntries(formData);
     const json = JSON.stringify(object);
